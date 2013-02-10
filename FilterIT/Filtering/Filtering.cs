@@ -22,20 +22,6 @@ namespace FilterIT
             return result;
         }
 
-        private static string ToImageString(this Bitmap img)
-        {
-            string bitmapString = null;
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                img.Save(memoryStream, ImageFormat.Jpeg);
-                byte[] bitmapBytes = memoryStream.GetBuffer();
-                bitmapString = Convert.ToBase64String(bitmapBytes,
-                    Base64FormattingOptions.InsertLineBreaks);
-            }
-            bitmapString = "data:image/jpeg;base64," + bitmapString + " ";
-            return bitmapString;
-        }
-
         private static BitmapData LockBitmap(Bitmap bitmap)
         {
             return bitmap.LockBits(new Rectangle(0, 0,

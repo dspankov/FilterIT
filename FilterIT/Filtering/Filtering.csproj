@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmapExtensions.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="InvertFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

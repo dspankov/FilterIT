@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FilterIT;
+using Filtering;
 
 namespace FilterIT.Controllers
 {
@@ -22,19 +23,24 @@ namespace FilterIT.Controllers
         {
             var stream = fileUpload.InputStream;
             Bitmap img = new Bitmap(stream);
+            int height = (int)(img.Height / ((float)img.Width / 500f));
+            var filteredImages = img.Resize(500, height).ApplyFilters();
             Session["Image"] = img;
             Session["ImageName"] = fileUpload.FileName;
-            int height = (int)(img.Height / ((float)img.Width / 500f));
-            img = ResizeBitmap(img, 500, height);
-            return img.ApplyFilters();
+            Session["filteredImages"] = filteredImages;
+            return filteredImages;
         }
 
-        private Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
+        [HttpPost]
+        public object CheckSession()
         {
-            Bitmap result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
-                g.DrawImage(sourceBMP, 0, 0, width, height);
-            return result;
+            if (Session["Image"] != null && Session["filteredImages"] != null)
+            {
+                var img = Session["Image"] as Bitmap;
+                int height = (int)(img.Height / ((float)img.Width / 500f));
+                return img.Resize(500, height).ToImageString() + " " + Session["filteredImages"];
+            }
+            return null;
         }
     }
 }

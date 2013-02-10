@@ -4,9 +4,14 @@
 
 <img id="dropImage" src="~/MyImages/DropImage.png" style="vertical-align:middle"/>
 
-<script>
+<script>    
     var dropbox = document.getElementById('dropImage');
-
+    
+    @if(User.Identity.IsAuthenticated)
+    {
+        @://alert("you are logged in!");
+        @:checkSession();
+    }
     // Setup drag and drop handlers.
     dropbox.addEventListener('dragenter', stopDefault, false);
     dropbox.addEventListener('dragover', stopDefault, false);
@@ -83,6 +88,50 @@
         fd.append("fileUpload", file);
         xmlhttp.open("POST", "Image/GetThumbnails", true);
         xmlhttp.send(fd);
+    }
+    @if(User.Identity.IsAuthenticated)
+    {
+     <text>
+        function checkSession() {
+            var xmlhttp;
+
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () { // Processing the response
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                 
+                    var response = xmlhttp.responseText;
+
+                    var arrayOfStrings = response.split(" ");
+                    alert("length = " + arrayOfStrings.length);
+                    if (arrayOfStrings[0].length==0) return;
+                    var i = 0;
+                    for (; i < arrayOfStrings.length; i++) {
+                        alert("len" + arrayOfStrings[i].length +" "+ i + " = " + arrayOfStrings[i]);
+                    }
+
+                    dropbox.src = arrayOfStrings[0];
+                    dropbox.style.width = "539px";
+
+                    var mainContent = document.getElementById("mainContent");
+
+                    var newImg = document.createElement("img");
+                    newImg.src = arrayOfStrings[2];
+                    newImg.style.width = "539px";
+
+                    mainContent.appendChild(newImg);
+                }
+            }
+            // An HTTP POST Request to the server with the dropped image named as "file"
+            var fd = new FormData();
+            xmlhttp.open("POST", "Image/CheckSession", false);
+            xmlhttp.send(fd);
+        }
+    </text>
     }
 
 </script>
