@@ -2,7 +2,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<img id="dropImage" src="~/MyImages/DropImage.png" />
+<img id="dropImage" src="~/MyImages/DropImage.png" style="vertical-align:middle"/>
 
 <script>
     var dropbox = document.getElementById('dropImage');
@@ -64,12 +64,24 @@
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
         xmlhttp.onreadystatechange = function () { // Processing the response
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { }
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var response = xmlhttp.responseText;
+                var arrayOfStrings = response.split(" ");
+                
+                var mainContent = document.getElementById("mainContent");
+
+                var newImg = document.createElement("img");
+                newImg.src = arrayOfStrings[0];
+                newImg.style.width = "539px";
+
+                mainContent.appendChild(newImg);
+            }
         }
         // An HTTP POST Request to the server with the dropped image named as "file"
         var fd = new FormData(); 
         fd.append("fileUpload", file);
-        xmlhttp.open("POST", "Filters/GetThumbnails", true);
+        xmlhttp.open("POST", "Image/GetThumbnails", true);
         xmlhttp.send(fd);
     }
 

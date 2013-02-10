@@ -658,6 +658,7 @@ tr.pager td {
     .main-content,
     .featured + .main-content {
         background-position: 10px 0;
+        
     }
 
     .content-wrapper {
