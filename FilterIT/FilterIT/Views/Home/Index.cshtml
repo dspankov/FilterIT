@@ -3,10 +3,12 @@
 }
 
 <img id="dropImage" src="~/MyImages/DropImage.png" style="vertical-align:middle"/>
+<div id="results" />
 
 <script>    
     var dropbox = document.getElementById('dropImage');
-    
+    var results = document.getElementById("results");
+
     @if(User.Identity.IsAuthenticated)
     {
         @://alert("you are logged in!");
@@ -53,6 +55,7 @@
             return function (evt) {
                   dropbox.src = evt.target.result;
                   dropbox.style.width = "539px";
+                  results.innerHTML = null;
             }
         })(file);
         loadXMLDoc(file);
@@ -73,14 +76,12 @@
 
                 var response = xmlhttp.responseText;
                 var arrayOfStrings = response.split(" ");
-                
-                var mainContent = document.getElementById("mainContent");
 
                 var newImg = document.createElement("img");
                 newImg.src = arrayOfStrings[0];
                 newImg.style.width = "539px";
 
-                mainContent.appendChild(newImg);
+                results.appendChild(newImg);
             }
         }
         // An HTTP POST Request to the server with the dropped image named as "file"
@@ -107,23 +108,21 @@
                     var response = xmlhttp.responseText;
 
                     var arrayOfStrings = response.split(" ");
-                    alert("length = " + arrayOfStrings.length);
+                   // alert("length = " + arrayOfStrings.length);
                     if (arrayOfStrings[0].length==0) return;
                     var i = 0;
                     for (; i < arrayOfStrings.length; i++) {
-                        alert("len" + arrayOfStrings[i].length +" "+ i + " = " + arrayOfStrings[i]);
+                        //alert("len" + arrayOfStrings[i].length +" "+ i + " = " + arrayOfStrings[i]);
                     }
 
                     dropbox.src = arrayOfStrings[0];
                     dropbox.style.width = "539px";
 
-                    var mainContent = document.getElementById("mainContent");
-
                     var newImg = document.createElement("img");
                     newImg.src = arrayOfStrings[2];
                     newImg.style.width = "539px";
 
-                    mainContent.appendChild(newImg);
+                    results.appendChild(newImg);
                 }
             }
             // An HTTP POST Request to the server with the dropped image named as "file"
