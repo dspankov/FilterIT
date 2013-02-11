@@ -1,18 +1,24 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<img id="dropImage" src="~/MyImages/DropImage.png" style="vertical-align:middle"/>
+@if (User.Identity.IsAuthenticated && Session["Image"]!=null)
+{
+    <img id="dropImage" style="vertical-align:middle"/>
+}
+else
+{
+    <img id="dropImage" src="~/MyImages/DropImage.png" style="vertical-align:middle"/>
+}
 <div id="results" />
 
 <script>    
     var dropbox = document.getElementById('dropImage');
     var results = document.getElementById("results");
+    var Width = "539px";
 
-    @if(User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated)
     {
-        @://alert("you are logged in!");
-        @:checkSession();
+        @:getSession();
     }
     // Setup drag and drop handlers.
     dropbox.addEventListener('dragenter', stopDefault, false);
@@ -54,15 +60,15 @@
         reader.onload = (function (aFile) {
             return function (evt) {
                   dropbox.src = evt.target.result;
-                  dropbox.style.width = "539px";
+                  dropbox.style.width = Width;
                   results.innerHTML = null;
             }
         })(file);
-        loadXMLDoc(file);
+        getThumbnails(file);
         // Read in the image file as a data url. 
         reader.readAsDataURL(file);
     }
-    function loadXMLDoc(file) {
+    function getThumbnails(file) {
         var xmlhttp;
 
         if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -79,7 +85,7 @@
 
                 var newImg = document.createElement("img");
                 newImg.src = arrayOfStrings[0];
-                newImg.style.width = "539px";
+                newImg.style.width = Width;
 
                 results.appendChild(newImg);
             }
@@ -90,10 +96,10 @@
         xmlhttp.open("POST", "Image/GetThumbnails", true);
         xmlhttp.send(fd);
     }
-    @if(User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated)
     {
      <text>
-        function checkSession() {
+        function getSession() {
             var xmlhttp;
 
             if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -106,26 +112,26 @@
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                  
                     var response = xmlhttp.responseText;
-
                     var arrayOfStrings = response.split(" ");
+
                    // alert("length = " + arrayOfStrings.length);
                     if (arrayOfStrings[0].length==0) return;
-                    var i = 0;
-                    for (; i < arrayOfStrings.length; i++) {
-                        //alert("len" + arrayOfStrings[i].length +" "+ i + " = " + arrayOfStrings[i]);
-                    }
+                    //var i = 0;
+                    //for (; i < arrayOfStrings.length; i++) {
+                    //    alert("len" + arrayOfStrings[i].length +" "+ i + " = " + arrayOfStrings[i]);
+                    //}
 
                     dropbox.src = arrayOfStrings[0];
-                    dropbox.style.width = "539px";
+                    dropbox.style.width = Width;
 
                     var newImg = document.createElement("img");
                     newImg.src = arrayOfStrings[2];
-                    newImg.style.width = "539px";
+                    newImg.style.width = Width;
 
                     results.appendChild(newImg);
                 }
             }
-            // An HTTP POST Request to the server with the dropped image named as "file"
+            // An HTTP POST Request to the server to get the content of the session.
             var fd = new FormData();
             xmlhttp.open("POST", "Image/CheckSession", false);
             xmlhttp.send(fd);
