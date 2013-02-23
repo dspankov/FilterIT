@@ -18,6 +18,7 @@ namespace FilterIT
             string result = null;
             BitmapData bitmapData = LockBitmap(bitmap);
             result += InvertFilter.Apply(bitmapData).ToImageString();
+            result += GrayscaleFilter.Apply(bitmapData).ToImageString();
             bitmap.UnlockBits(bitmapData);
             return result;
         }

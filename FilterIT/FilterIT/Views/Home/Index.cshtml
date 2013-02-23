@@ -83,11 +83,16 @@ else
                 var response = xmlhttp.responseText;
                 var arrayOfStrings = response.split(" ");
 
-                var newImg = document.createElement("img");
-                newImg.src = arrayOfStrings[0];
-                newImg.style.width = Width;
+                //for (var i = 0; i < arrayOfStrings.length; i++)
+                //    alert("[" + i + "] = " + arrayOfStrings[i]);
 
-                results.appendChild(newImg);
+                for (var i = 0; i < arrayOfStrings.length - 1; i++) {
+                    var newImg = document.createElement("img");
+                    newImg.src = arrayOfStrings[i];
+                    newImg.style.width = Width;
+
+                    results.appendChild(newImg);
+                }
             }
         }
         // An HTTP POST Request to the server with the dropped image named as "file"
@@ -114,21 +119,21 @@ else
                     var response = xmlhttp.responseText;
                     var arrayOfStrings = response.split(" ");
 
-                   // alert("length = " + arrayOfStrings.length);
                     if (arrayOfStrings[0].length==0) return;
-                    //var i = 0;
-                    //for (; i < arrayOfStrings.length; i++) {
-                    //    alert("len" + arrayOfStrings[i].length +" "+ i + " = " + arrayOfStrings[i]);
-                    //}
+
+                    //for (var i = 0; i < arrayOfStrings.length; i++)
+                    //    alert("[" + i + "] = " + arrayOfStrings[i]);
 
                     dropbox.src = arrayOfStrings[0];
                     dropbox.style.width = Width;
 
-                    var newImg = document.createElement("img");
-                    newImg.src = arrayOfStrings[2];
-                    newImg.style.width = Width;
+                    for (var i = 1; i < arrayOfStrings.length - 1; i++) {
+                        var newImg = document.createElement("img");
+                        newImg.src = arrayOfStrings[i];
+                        newImg.style.width = Width;
 
-                    results.appendChild(newImg);
+                        results.appendChild(newImg);
+                    }
                 }
             }
             // An HTTP POST Request to the server to get the content of the session.

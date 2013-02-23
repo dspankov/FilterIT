@@ -38,7 +38,7 @@ namespace FilterIT.Controllers
             {
                 var img = Session["Image"] as Bitmap;
                 int height = (int)(img.Height / ((float)img.Width / 500f));
-                return img.Resize(500, height).ToImageString() + " " + Session["filteredImages"];
+                return img.Resize(500, height).ToImageString() + Session["filteredImages"];
             }
             return null;
         }
