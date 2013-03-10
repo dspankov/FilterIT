@@ -23,6 +23,9 @@ namespace FilterIT
             result += GammaFilter.Apply(bitmapData, 1.0, 0.0, 0.0).ToImageString(); // red gamma filter
             result += GammaFilter.Apply(bitmapData, 0.0, 1.0, 0.0).ToImageString(); // green gamma filter
             result += GammaFilter.Apply(bitmapData, 0.0, 0.0, 1.0).ToImageString(); // blue gamma filter
+            //result += ColorFilter.Apply(bitmapData, 1.0, 0.0, 0.0).ToImageString(); // red color filter
+            //result += ColorFilter.Apply(bitmapData, 0.0, 1.0, 0.0).ToImageString(); // green color filter
+            //result += ColorFilter.Apply(bitmapData, 0.0, 0.0, 1.0).ToImageString(); // blue color filter
             bitmap.UnlockBits(bitmapData);
             return result;
         }
