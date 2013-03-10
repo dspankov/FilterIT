@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BitmapExtensions.cs" />
     <Compile Include="ColorFilter.cs" />
+    <Compile Include="ContrastFilter.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="GammaFilter.cs" />
     <Compile Include="GrayscaleFilter.cs" />

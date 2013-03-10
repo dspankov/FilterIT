@@ -19,6 +19,9 @@ namespace FilterIT
             BitmapData bitmapData = LockBitmap(bitmap);
             result += InvertFilter.Apply(bitmapData).ToImageString();
             result += GrayscaleFilter.Apply(bitmapData).ToImageString();
+            result += SepiaFilter.Apply(bitmapData, 20).ToImageString();
+            result += ContrastFilter.Apply(bitmapData, 50.0, false).ToImageString();
+            result += ContrastFilter.Apply(bitmapData, 50.0, true).ToImageString();
             result += GammaFilter.Apply(bitmapData, 0.1, 0.5, 0.9).ToImageString(); // combo gamma filter from 0.0 to 1.0
             result += GammaFilter.Apply(bitmapData, 1.0, 0.0, 0.0).ToImageString(); // red gamma filter
             result += GammaFilter.Apply(bitmapData, 0.0, 1.0, 0.0).ToImageString(); // green gamma filter
@@ -26,7 +29,6 @@ namespace FilterIT
             //result += ColorFilter.Apply(bitmapData, 1.0, 0.0, 0.0).ToImageString(); // red color filter
             //result += ColorFilter.Apply(bitmapData, 0.0, 1.0, 0.0).ToImageString(); // green color filter
             //result += ColorFilter.Apply(bitmapData, 0.0, 0.0, 1.0).ToImageString(); // blue color filter
-            result += SepiaFilter.Apply(bitmapData, 20).ToImageString();
             bitmap.UnlockBits(bitmapData);
             return result;
         }
