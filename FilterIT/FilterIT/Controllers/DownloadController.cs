@@ -76,9 +76,45 @@ namespace FilterIT.Controllers
 
         private FileResult GetFilteredImage(string filterName)
         {
-            var converter = new ImageConverter();
+            ImageConverter converter = new ImageConverter();
             var originalImage = Session["Image"] as Bitmap;
-            var filteredImage = ApplyFilter(originalImage, filterName);
+            Bitmap filteredImage = null;
+            switch (filterName)
+            {
+                case "Invert":
+                    filteredImage = originalImage.Invert();
+                    break;
+                case "Grayscale":
+                    filteredImage = originalImage.Grayscale();
+                    break;
+                case "Sepia":
+                    filteredImage = originalImage.Sepia();
+                    break;
+                case "FalseContrast":
+                    filteredImage = originalImage.FalseContrast();
+                    break;
+                case "TrueContrast":
+                    filteredImage = originalImage.TrueContrast();
+                    break;
+                case "PositiveBrightness":
+                    filteredImage = originalImage.PositiveBrightness();
+                    break;
+                case "NegativeBrightness":
+                    filteredImage = originalImage.NegativeBrightness();
+                    break;
+                case "ComboGamma":
+                    filteredImage = originalImage.ComboGamma();
+                    break;
+                case "RedGamma":
+                    filteredImage = originalImage.RedGamma();
+                    break;
+                case "GreenGamma":
+                    filteredImage = originalImage.GreenGamma();
+                    break;
+                case "BlueGamma":
+                    filteredImage = originalImage.BlueGamma();
+                    break;
+            }
             
             var imageData = (byte[])converter.ConvertTo(filteredImage, typeof(byte[]));
 
@@ -86,34 +122,5 @@ namespace FilterIT.Controllers
                 string.Format("{0}_{1}.png", Session["ImageName"], filterName));
         }
 
-        private static Bitmap ApplyFilter(Bitmap originalImage, string filterName)
-        {
-            switch (filterName)
-            {
-                case "Invert":
-                    return originalImage.Invert();
-                case "Grayscale":
-                    return originalImage.Grayscale();
-                case "Sepia":
-                    return originalImage.Sepia();
-                case "FalseContrast":
-                    return originalImage.FalseContrast();
-                case "TrueContrast":
-                    return originalImage.TrueContrast();
-                case "PositiveBrightness":
-                    return originalImage.PositiveBrightness();
-                case "NegativeBrightness":
-                    return originalImage.NegativeBrightness();
-                case "ComboGamma":
-                    return originalImage.ComboGamma();
-                case "RedGamma":
-                    return originalImage.RedGamma();
-                case "GreenGamma":
-                    return originalImage.GreenGamma();
-                case "BlueGamma":
-                    return originalImage.BlueGamma();
-            }
-            return originalImage;
-        }
     }
 }
