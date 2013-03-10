@@ -168,11 +168,13 @@
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +289,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\Images\Details.cshtml" />
+    <Content Include="Views\Images\Create.cshtml" />
+    <Content Include="Views\Images\Edit.cshtml" />
+    <Content Include="Views\Images\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
