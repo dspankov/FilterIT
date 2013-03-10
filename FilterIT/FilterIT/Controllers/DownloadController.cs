@@ -73,6 +73,7 @@ namespace FilterIT.Controllers
             return GetFilteredImage("BlueGamma");
         }
 
+
         private FileResult GetFilteredImage(string filterName)
         {
             var converter = new ImageConverter();
