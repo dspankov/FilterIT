@@ -22,6 +22,8 @@ namespace FilterIT
             result += SepiaFilter.Apply(bitmapData, 20).ToImageString();
             result += ContrastFilter.Apply(bitmapData, 50.0, false).ToImageString();
             result += ContrastFilter.Apply(bitmapData, 50.0, true).ToImageString();
+            result += BrightnessFilter.Apply(bitmapData, 50).ToImageString();
+            result += BrightnessFilter.Apply(bitmapData, -50).ToImageString();
             result += GammaFilter.Apply(bitmapData, 0.1, 0.5, 0.9).ToImageString(); // combo gamma filter from 0.0 to 1.0
             result += GammaFilter.Apply(bitmapData, 1.0, 0.0, 0.0).ToImageString(); // red gamma filter
             result += GammaFilter.Apply(bitmapData, 0.0, 1.0, 0.0).ToImageString(); // green gamma filter
