@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Filtering;
 
 namespace FilterIT
 {
@@ -33,6 +32,149 @@ namespace FilterIT
             //result += ColorFilter.Apply(bitmapData, 0.0, 0.0, 1.0).ToImageString(); // blue color filter
             bitmap.UnlockBits(bitmapData);
             return result;
+        }
+
+        public static Bitmap Invert(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return InvertFilter.Apply(bitmapData);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap Grayscale(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return GrayscaleFilter.Apply(bitmapData);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap Sepia(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return SepiaFilter.Apply(bitmapData, 20);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap FalseContrast(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return ContrastFilter.Apply(bitmapData, 50.0, false);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap TrueContrast(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return ContrastFilter.Apply(bitmapData, 50.0, true);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap PositiveBrightness(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return BrightnessFilter.Apply(bitmapData, 50);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap NegativeBrightness(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return BrightnessFilter.Apply(bitmapData, -50);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap ComboGamma(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return GammaFilter.Apply(bitmapData, 0.1, 0.5, 0.9);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap RedGamma(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return GammaFilter.Apply(bitmapData, 1.0, 0.0, 0.0);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap GreenGamma(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return GammaFilter.Apply(bitmapData, 0.0, 1.0, 0.0);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+        }
+
+        public static Bitmap BlueGamma(this Bitmap bitmap)
+        {
+            BitmapData bitmapData = LockBitmap(bitmap);
+            try
+            {
+                return GammaFilter.Apply(bitmapData, 0.0, 0.0, 1.0);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
         }
 
         private static BitmapData LockBitmap(Bitmap bitmap)

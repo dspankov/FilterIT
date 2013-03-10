@@ -15,7 +15,8 @@ else
     var dropbox = document.getElementById('dropImage');
     var results = document.getElementById("results");
     var Width = "539px";
-
+    var FilterNames = new Array("Invert", "Grayscale", "Sepia", "FalseContrast", "TrueContrast", "PositiveBrightness", "NegativeBrightness", "ComboGamma", "RedGamma", "GreenGamma", "BlueGamma");
+    
     @if (User.Identity.IsAuthenticated)
     {
         @:getSession();
@@ -91,7 +92,11 @@ else
                     newImg.src = arrayOfStrings[i];
                     newImg.style.width = Width;
 
-                    results.appendChild(newImg);
+                    var newAnchor = document.createElement("a");
+                    newAnchor.href = "../../Download/" + FilterNames[i];
+
+                    newAnchor.appendChild(newImg);
+                    results.appendChild(newAnchor);
                 }
             }
         }
@@ -132,7 +137,11 @@ else
                         newImg.src = arrayOfStrings[i];
                         newImg.style.width = Width;
 
-                        results.appendChild(newImg);
+                        var newAnchor = document.createElement("a");
+                        newAnchor.href = "../../Download/" + FilterNames[i-1];
+
+                        newAnchor.appendChild(newImg);
+                        results.appendChild(newAnchor);
                     }
                 }
             }

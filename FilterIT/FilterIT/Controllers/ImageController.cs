@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using FilterIT;
 using Filtering;
 
 namespace FilterIT.Controllers
@@ -27,7 +26,7 @@ namespace FilterIT.Controllers
             var filteredImages = img.Resize(500, height).ApplyFilters();
             Session["Image"] = img;
             Session["ImageName"] = fileUpload.FileName;
-            Session["filteredImages"] = filteredImages;
+            Session["FilteredImages"] = filteredImages;
             return filteredImages;
         }
 
