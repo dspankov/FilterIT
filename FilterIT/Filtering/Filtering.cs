@@ -26,6 +26,7 @@ namespace FilterIT
             //result += ColorFilter.Apply(bitmapData, 1.0, 0.0, 0.0).ToImageString(); // red color filter
             //result += ColorFilter.Apply(bitmapData, 0.0, 1.0, 0.0).ToImageString(); // green color filter
             //result += ColorFilter.Apply(bitmapData, 0.0, 0.0, 1.0).ToImageString(); // blue color filter
+            result += SepiaFilter.Apply(bitmapData, 20).ToImageString();
             bitmap.UnlockBits(bitmapData);
             return result;
         }
