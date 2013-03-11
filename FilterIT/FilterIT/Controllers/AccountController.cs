@@ -79,6 +79,7 @@ namespace FilterIT.Controllers
                 // Attempt to register the user
                 try
                 {
+                    System.IO.Directory.CreateDirectory(string.Format(@"C:\Users\Dimitar\Pictures\FilterIT\{0}", model.UserName));
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");

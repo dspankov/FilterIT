@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "History";
+}
+    <h2>History</h2>
+@if (!User.Identity.IsAuthenticated)
+{
+    <h3>Please log in to view your history!</h3>
+}
+<div id="results" />
+    <script>
+        var FilterNames = new Array("Invert", "Grayscale", "Sepia", "FalseContrast", "TrueContrast", "PositiveBrightness", "NegativeBrightness", "ComboGamma", "RedGamma", "GreenGamma", "BlueGamma");
+        var Width = "539px";
+        @if (User.Identity.IsAuthenticated)
+        {
+             <text>
+        window.onload = function ShowHistory() {
+            var images = @Html.Raw(Json.Encode(ViewBag.History));
+            if(images.length==0){
+                results.innerText = "\n\nYou have no history :(";
+            }
+           
+            for (var i = 0; i < images.length ; i++) {
+                var newImg = document.createElement("img");
+                newImg.src = images[i];
+                newImg.style.width = Width;
+                results.appendChild(newImg);
+            }
+        }
+            </text>
+        }
+    </script>

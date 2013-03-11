@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Filtering;
+using System.IO;
 
 namespace FilterIT.Controllers
 {
@@ -22,12 +23,26 @@ namespace FilterIT.Controllers
         {
             var stream = fileUpload.InputStream;
             Bitmap img = new Bitmap(stream);
+
+            if(User.Identity.IsAuthenticated)
+                SaveImage(fileUpload.FileName, img);
+
             int height = (int)(img.Height / ((float)img.Width / 500f));
             var filteredImages = img.Resize(500, height).ApplyFilters();
+
             Session["Image"] = img;
             Session["ImageName"] = fileUpload.FileName;
             Session["FilteredImages"] = filteredImages;
+
             return filteredImages;
+        }
+
+        private void SaveImage(string fileName, Bitmap img)
+        {
+            img.Save(string.Format(@"C:\Users\Dimitar\Pictures\FilterIT\{0}\{2}_{1}.png",
+                User.Identity.Name,
+                Path.GetFileNameWithoutExtension(fileName),
+                DateTime.Now.Ticks));
         }
 
         [HttpPost]

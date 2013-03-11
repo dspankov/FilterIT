@@ -15,6 +15,13 @@ namespace FilterIT.Controllers
             return View();
         }
 
+        public ActionResult History()
+        {
+            ViewBag.Message = "Your History";
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
