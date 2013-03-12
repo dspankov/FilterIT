@@ -19,7 +19,7 @@ namespace FilterIT.Controllers
         }
 
         [HttpPost]
-        public object GetThumbnails(HttpPostedFileBase fileUpload)
+        public string GetThumbnails(HttpPostedFileBase fileUpload)
         {
             var stream = fileUpload.InputStream;
             Bitmap img = new Bitmap(stream);
@@ -46,7 +46,7 @@ namespace FilterIT.Controllers
         }
 
         [HttpPost]
-        public object CheckSession()
+        public string CheckSession()
         {
             if (Session["Image"] != null && Session["filteredImages"] != null)
             {

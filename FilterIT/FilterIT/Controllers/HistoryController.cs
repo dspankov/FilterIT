@@ -16,19 +16,31 @@ namespace FilterIT.Controllers
 
         public ActionResult History()
         {
-            GetHistory();
             return View();
         }
 
-        private void GetHistory()
+        [HttpPost]
+        public string GetHistory()
         {
-            var history = new List<string>();
+            var history = string.Empty;
             var filePaths = Directory.GetFiles(string.Format(@"C:\Users\Dimitar\Pictures\FilterIT\{0}\", User.Identity.Name), "*.png");
-            filePaths.ToList().ForEach(filePath => history.Add(new Bitmap(filePath).ToImageString()));
-            ViewBag.History = history;
+            filePaths.ToList().ForEach(filePath => history += new Bitmap(filePath).ToImageString());
+            return history;
         }
 
-       
+        [HttpPost]
+        public void ChooseImage(int id)
+        {
+            var filePaths = Directory.GetFiles(string.Format(@"C:\Users\Dimitar\Pictures\FilterIT\{0}\", User.Identity.Name), "*.png");
+            var img = new Bitmap(filePaths[id]);
+
+            int height = (int)(img.Height / ((float)img.Width / 500f));
+            var filteredImages = img.Resize(500, height).ApplyFilters();
+
+            Session["Image"] = img;
+            Session["ImageName"] = Path.GetFileName(filePaths[id]);
+            Session["FilteredImages"] = filteredImages;
+        }
 
     }
 }

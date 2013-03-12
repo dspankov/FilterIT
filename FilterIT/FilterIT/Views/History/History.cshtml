@@ -1,7 +1,10 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "History";
 }
+
     <h2>History</h2>
+
 @if (!User.Identity.IsAuthenticated)
 {
     <h3>Please log in to view your history!</h3>
@@ -12,20 +15,68 @@
         var Width = "539px";
         @if (User.Identity.IsAuthenticated)
         {
+            @:getHistory();
+
              <text>
-        window.onload = function ShowHistory() {
-            var images = @Html.Raw(Json.Encode(ViewBag.History));
-            if(images.length==0){
-                results.innerText = "\n\nYou have no history :(";
+        
+        function getHistory() {
+            var xmlhttp;
+
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
             }
-           
-            for (var i = 0; i < images.length ; i++) {
-                var newImg = document.createElement("img");
-                newImg.src = images[i];
-                newImg.style.width = Width;
-                results.appendChild(newImg);
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
+            xmlhttp.onreadystatechange = function () { // Processing the response
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    var response = xmlhttp.responseText;
+                    var arrayOfStrings = response.split(" ");
+
+                    //alert("size=" + arrayOfStrings.length);
+                    
+                    if (arrayOfStrings[0].length == 0) {
+                        results.innerHTML = "<h3>You have no history :(</h3>";
+                        return;
+                    }
+
+                    for (var i = 0; i < arrayOfStrings.length ; i++) {
+                        var newImg = document.createElement("img");
+                        newImg.src = arrayOfStrings[i];
+                        newImg.id = i;
+                        newImg.style.width = Width;
+                        newImg.style.cursor = "pointer";
+                        newImg.onclick = function () {
+                            var id = this.id;
+                            //alert("id= " + id);
+                            var innerXmlHttp;
+                            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                                innerXmlHttp = new XMLHttpRequest();
+                            }
+                            else {// code for IE6, IE5
+                                innerXmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
+                            innerXmlHttp.onreadystatechange = function () { // Processing the response
+                                if (innerXmlHttp.readyState == 4 && innerXmlHttp.status == 200) {
+                                    window.location = "../../";
+                                }
+                            }
+                            var ifd = new FormData();
+                            ifd.append("id", id);
+                            innerXmlHttp.open("POST", "../../History/ChooseImage", false);
+                            innerXmlHttp.send(ifd);
+                        }
+
+                        results.appendChild(newImg);
+                    }
+                }
+            }
+            // An HTTP POST Request to the server to get the content of the session.
+            var fd = new FormData();
+            xmlhttp.open("POST", "../../History/GetHistory", false);
+            xmlhttp.send(fd);
         }
-            </text>
+        </text>
         }
     </script>
